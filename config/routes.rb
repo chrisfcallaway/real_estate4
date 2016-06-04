@@ -1,5 +1,73 @@
 Rails.application.routes.draw do
   
+  # Routes for the Feedback resource:
+  # CREATE
+  get "/feedbacks/new", :controller => "feedbacks", :action => "new"
+  post "/create_feedback", :controller => "feedbacks", :action => "create"
+
+  # READ
+  get "/feedbacks", :controller => "feedbacks", :action => "index"
+  get "/feedbacks/:id", :controller => "feedbacks", :action => "show"
+
+  # UPDATE
+  get "/feedbacks/:id/edit", :controller => "feedbacks", :action => "edit"
+  post "/update_feedback/:id", :controller => "feedbacks", :action => "update"
+
+  # DELETE
+  get "/delete_feedback/:id", :controller => "feedbacks", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Favorite resource:
+  # CREATE
+  get "/favorites/new", :controller => "favorites", :action => "new"
+  post "/create_favorite", :controller => "favorites", :action => "create"
+
+  # READ
+  get "/favorites", :controller => "favorites", :action => "index"
+  get "/favorites/:id", :controller => "favorites", :action => "show"
+
+  # UPDATE
+  get "/favorites/:id/edit", :controller => "favorites", :action => "edit"
+  post "/update_favorite/:id", :controller => "favorites", :action => "update"
+
+  # DELETE
+  get "/delete_favorite/:id", :controller => "favorites", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Proposal resource:
+  # CREATE
+  get "/proposals/new", :controller => "proposals", :action => "new"
+  post "/create_proposal", :controller => "proposals", :action => "create"
+
+  # READ
+  get "/proposals", :controller => "proposals", :action => "index"
+  get "/proposals/:id", :controller => "proposals", :action => "show"
+
+  # UPDATE
+  get "/proposals/:id/edit", :controller => "proposals", :action => "edit"
+  post "/update_proposal/:id", :controller => "proposals", :action => "update"
+
+  # DELETE
+  get "/delete_proposal/:id", :controller => "proposals", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Property resource:
+  # CREATE
+  get "/properties/new", :controller => "properties", :action => "new"
+  post "/create_property", :controller => "properties", :action => "create"
+
+  # READ
+  get "/properties", :controller => "properties", :action => "index"
+  get "/properties/:id", :controller => "properties", :action => "show"
+
+  # UPDATE
+  get "/properties/:id/edit", :controller => "properties", :action => "edit"
+  post "/update_property/:id", :controller => "properties", :action => "update"
+
+  # DELETE
+  get "/delete_property/:id", :controller => "properties", :action => "destroy"
+  #------------------------------
+
   devise_for :users
 root 'proposals#index'
 

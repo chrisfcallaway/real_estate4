@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h3>Property #<%= @property.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Description</dt>
+      <dd><%= @property.description %></dd>
+
+      <dt>Square feet</dt>
+      <dd><%= @property.square_feet %></dd>
+
+      <dt>Intended use</dt>
+      <dd><%= @property.intended_use %></dd>
+
+      <dt>Asking price</dt>
+      <dd><%= @property.asking_price %></dd>
+
+      <dt>User</dt>
+      <dd><%= @property.user_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/properties" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/properties/<%= @property.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_property/<%= @property.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>
+    Proposals
+    <a href="/proposals/new" class="btn btn-lg btn-success">New Proposal</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Property</th>
+        <th>Store name</th>
+        <th>Description</th>
+        <th>Square feet</th>
+        <th>Nearest</th>
+        <th>Bid</th>
+        <th>Architectural</th>
+        <th>Text</th>
+        <th>Image</th>
+        <th>User</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @proposals.each do |proposal| %>
+      <tr>
+        <td><%= proposal.property_id %></td>
+        <td><%= proposal.store_name %></td>
+        <td><%= proposal.description %></td>
+        <td><%= proposal.square_feet %></td>
+        <td><%= proposal.nearest %></td>
+        <td><%= proposal.bid %></td>
+        <td><%= proposal.architectural %></td>
+        <td><%= proposal.text %></td>
+        <td><%= proposal.image %></td>
+        <td><%= proposal.user_id %></td>
+        <td>
+          <a href="/proposals/<%= proposal.id %>" class="btn btn-primary">Show</a>
+          <a href="/proposals/<%= proposal.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_proposal/<%= proposal.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

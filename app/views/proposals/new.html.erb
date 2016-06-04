@@ -1,0 +1,118 @@
+<!-- Validation failure messages -->
+<% if @proposal.errors.any? %>
+  <% @proposal.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Proposal</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_proposal" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for property_id -->
+      <div class="form-group">
+        <label for="property_id" class="control-label">
+          Property
+        </label>
+
+        <input type="text" id="property_id" name="property_id" placeholder="Property" class="form-control" value="<%= @proposal.property_id %>">
+      </div>
+
+      <!-- Label and input for store_name -->
+      <div class="form-group">
+        <label for="store_name" class="control-label">
+          Store name
+        </label>
+
+        <textarea id="store_name" name="store_name" placeholder="Store name" class="form-control" rows="3"><%= @proposal.store_name %></textarea>
+      </div>
+
+      <!-- Label and input for description -->
+      <div class="form-group">
+        <label for="description" class="control-label">
+          Description
+        </label>
+
+        <textarea id="description" name="description" placeholder="Description" class="form-control" rows="3"><%= @proposal.description %></textarea>
+      </div>
+
+      <!-- Label and input for square_feet -->
+      <div class="form-group">
+        <label for="square_feet" class="control-label">
+          Square feet
+        </label>
+
+        <input type="text" id="square_feet" name="square_feet" placeholder="Square feet" class="form-control" value="<%= @proposal.square_feet %>">
+      </div>
+
+      <!-- Label and input for nearest -->
+      <div class="form-group">
+        <label for="nearest" class="control-label">
+          Nearest
+        </label>
+
+        <input type="text" id="nearest" name="nearest" placeholder="Nearest" class="form-control" value="<%= @proposal.nearest %>">
+      </div>
+
+      <!-- Label and input for bid -->
+      <div class="form-group">
+        <label for="bid" class="control-label">
+          Bid
+        </label>
+
+        <input type="text" id="bid" name="bid" placeholder="Bid" class="form-control" value="<%= @proposal.bid %>">
+      </div>
+
+      <!-- Label and input for architectural -->
+      <div class="form-group">
+        <label for="architectural" class="control-label">
+          Architectural
+        </label>
+
+        <input type="text" id="architectural" name="architectural" placeholder="Architectural" class="form-control" value="<%= @proposal.architectural %>">
+      </div>
+
+      <!-- Label and input for text -->
+      <div class="form-group">
+        <label for="text" class="control-label">
+          Text
+        </label>
+
+        <input type="text" id="text" name="text" placeholder="Text" class="form-control" value="<%= @proposal.text %>">
+      </div>
+
+      <!-- Label and input for image -->
+      <div class="form-group">
+        <label for="image" class="control-label">
+          Image
+        </label>
+
+        <input type="text" id="image" name="image" placeholder="Image" class="form-control" value="<%= @proposal.image %>">
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @proposal.user_id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Proposal
+      </button>
+      or
+      <a href="/proposals">Cancel</a>
+    </form>
+  </div>
+</div>

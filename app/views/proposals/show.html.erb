@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h3>Proposal #<%= @proposal.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Property</dt>
+      <dd><%= @proposal.property_id %></dd>
+
+      <dt>Store name</dt>
+      <dd><%= @proposal.store_name %></dd>
+
+      <dt>Description</dt>
+      <dd><%= @proposal.description %></dd>
+
+      <dt>Square feet</dt>
+      <dd><%= @proposal.square_feet %></dd>
+
+      <dt>Nearest</dt>
+      <dd><%= @proposal.nearest %></dd>
+
+      <dt>Bid</dt>
+      <dd><%= @proposal.bid %></dd>
+
+      <dt>Architectural</dt>
+      <dd><%= @proposal.architectural %></dd>
+
+      <dt>Text</dt>
+      <dd><%= @proposal.text %></dd>
+
+      <dt>Image</dt>
+      <dd><%= @proposal.image %></dd>
+
+      <dt>User</dt>
+      <dd><%= @proposal.user_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/proposals" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/proposals/<%= @proposal.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_proposal/<%= @proposal.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

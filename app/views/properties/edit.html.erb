@@ -1,0 +1,73 @@
+<!-- Validation failure messages -->
+<% if @property.errors.any? %>
+  <% @property.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Property #<%= @property.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_property/<%= @property.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for description -->
+      <div class="form-group">
+        <label for="description" class="control-label">
+          Description
+        </label>
+
+        <textarea id="description" name="description" placeholder="Description" class="form-control" rows="3"><%= @property.description %></textarea>
+      </div>
+
+      <!-- Label and input for square_feet -->
+      <div class="form-group">
+        <label for="square_feet" class="control-label">
+          Square feet
+        </label>
+
+        <input type="text" id="square_feet" name="square_feet" placeholder="Square feet" class="form-control" value="<%= @property.square_feet %>">
+      </div>
+
+      <!-- Label and input for intended_use -->
+      <div class="form-group">
+        <label for="intended_use" class="control-label">
+          Intended use
+        </label>
+
+        <textarea id="intended_use" name="intended_use" placeholder="Intended use" class="form-control" rows="3"><%= @property.intended_use %></textarea>
+      </div>
+
+      <!-- Label and input for asking_price -->
+      <div class="form-group">
+        <label for="asking_price" class="control-label">
+          Asking price
+        </label>
+
+        <input type="text" id="asking_price" name="asking_price" placeholder="Asking price" class="form-control" value="<%= @property.asking_price %>">
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @property.user_id %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Property
+      </button>
+      or
+      <a href="/properties/<%= @property.id %>">Cancel</a>
+    </form>
+  </div>
+</div>
