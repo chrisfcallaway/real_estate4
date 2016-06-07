@@ -20,63 +20,57 @@ end
 puts "There are now #{User.count} users in the database."
 
 proposal_info = [
-  {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Lake_Bondhus_Norway_2862.jpg/1280px-Lake_Bondhus_Norway_2862.jpg",
-    :caption => "Lake Bondhus"
+{
+    :image => "https://upload.wikimedia.org/wikipedia/commons/1/17/DowneyMcdonalds.jpg",
+    :store_name => "McDonalds"
   },
   {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Lanzarote_5_Luc_Viatour.jpg/1280px-Lanzarote_5_Luc_Viatour.jpg",
-    :caption => "Cueva de los Verdes"
+    :image => "https://upload.wikimedia.org/wikipedia/commons/3/31/Walmart_Home_Office.jpg",
+    :store_name => "Wal-Mart"
   },
   {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Fire_breathing_2_Luc_Viatour.jpg/1280px-Fire_breathing_2_Luc_Viatour.jpg",
-    :caption => "Jaipur"
+    :image => "https://upload.wikimedia.org/wikipedia/en/9/97/Arby%27s-Midland-MI.jpg",
+    :store_name => "Arby's"
   },
   {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Ніжний_ранковий_світло.jpg/1280px-Ніжний_ранковий_світло.jpg",
-    :caption => "Sviati Hory"
+    :image => "https://upload.wikimedia.org/wikipedia/commons/d/d8/2009-04-12_The_Home_Depot_in_Knightdale.jpg",
+    :store_name => "Home Depot"
   },
   {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Mostar_Old_Town_Panorama_2007.jpg/1280px-Mostar_Old_Town_Panorama_2007.jpg",
-    :caption => "Mostar"
-  },
-  {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Elakala_Waterfalls_Swirling_Pool_Mossy_Rocks.jpg/1280px-Elakala_Waterfalls_Swirling_Pool_Mossy_Rocks.jpg",
-    :caption => "Elakala"
-  },
-  {
-    :image => "http://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Biandintz_eta_zaldiak_-_modified2.jpg/1280px-Biandintz_eta_zaldiak_-_modified2.jpg",
-    :caption => "Biandintz"
+    :image => "https://upload.wikimedia.org/wikipedia/commons/5/5f/Red_Lobster%2C_Baton_Rouge.jpg",
+    :store_name => "Red Lobster"
   }
 ]
 
 users = User.all
 
 users.each do |user|
-  user.photos.create photo_info
+  user.proposals.create proposal_info
 end
 
-puts "There are now #{Photo.count} photos in the database."
+puts "There are now #{Proposal.count} proposals in the database."
 
-photos = Photo.all
+proposals = Proposal.all
 
-photos.each do |photo|
+proposals.each do |proposal|
   rand(6).times do
-    comment = photo.comments.build
-    comment.user = users.sample
-    comment.body = Faker::Hacker.say_something_smart
-    comment.save
+    feedback = proposal.feedbacks.build
+    feedback.user = users.sample
+    feedback.body = Faker::Hacker.say_something_smart
+    feedback.save
   end
 end
 
-puts "There are now #{Comment.count} comments in the database."
+puts "There are now #{Feedback.count} feedbacks in the database."
 
-photos.each do |photo|
+proposals.each do |proposal|
   users.sample(rand(users.count)).each do |user|
-    like = photo.likes.build
-    like.user = user
-    like.save
+    favorite = proposal.favorites.build
+    favorite.user = user
+    favorite.save
   end
 end
 
-puts "There are now #{Like.count} likes in the database."
+puts "There are now #{Favorite.count} favorites in the database."
+
+
