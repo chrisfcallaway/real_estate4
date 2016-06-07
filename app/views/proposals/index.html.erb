@@ -32,7 +32,7 @@
         <td><%= proposal.bid %></td>
         <td><%= proposal.architectural %></td>
         <td><%= proposal.text %></td>
-        <td><%= proposal.image %></td>
+        <td><img src="<%= proposal.image %>" class="img-responsive"></td>
         <td><%= proposal.user_id %></td>
         <td>
           <a href="/proposals/<%= proposal.id %>" class="btn btn-primary">Show</a>

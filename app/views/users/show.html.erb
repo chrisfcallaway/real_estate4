@@ -1,65 +1,99 @@
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <div class="jumbotron">
-      <h3>
-        <%= @user.username %>
-      </h3>
-
-      <div class="row">
-        <div class="col-md-3">
-          <% friend_request = FriendRequest.find_by(:sender_id => current_user.id, :receiver_id => @user.id) %>
-          <% if friend_request.present? %>
-            <a href="/delete_friend_request/<%= friend_request.id %>" class="btn btn-success btn-block">
-              Following
-            </a>
-          <% else %>
-            <form action="/create_friend_request" method="post">
-              <!-- Hidden input for authenticity token to protect from forgery -->
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-              <input type="hidden" id="sender_id" name="sender_id" value="<%= current_user.id %>">
-
-              <input type="hidden" id="receiver_id" name="receiver_id" value="<%= @user.id %>">
-
-              <button class="btn btn-default btn-block">
-                Follow
-              </button>
-            </form>
-          <% end %>
-        </div>
-
-        <div class="col-md-3">
-          <p class="lead">
-            <%= @user.properties.count %> posts
-          </p>
-        </div>
-
-        <div class="col-md-3">
-          <p class="lead">
-            <%= @user.friends_where_receiver.count %> followers
-          </p>
-        </div>
-
-        <div class="col-md-3">
-          <p class="lead">
-            <%= @user.friends_where_sender.count %> following
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<% if @user == current_user %>
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <a href="/properties/new" class="btn btn-default btn-block">
-      <i class="fa fa-plus"></i>
-    </a>
-
-    <hr>
-  </div>
-</div>
-<% end %>
-
-<%= render @user.properties %>
+   <div class="col-md-8 col-md-offset-2">
+     <div class="jumbotron">
+       <h3>
+         <%= @user.username %>
+       </h3>
+     </div>
+   </div>
+ </div>
+ <div class="row">
+   <div class="col-md-8 col-md-offset-2">
+     <% @user.proposals.each do |proposal| %>
+     <div class="panel panel-default">
+       <div class="panel-heading">
+         <h3 class="panel-title">
+           <a href="/users/<%= proposal.user_id %>"><%= proposal.user.username %></a>
+           <small>
+             <%= time_ago_in_words(proposal.created_at) %> ago
+           </small>
+         </h3>
+       </div>
+       <div class="panel-body">
+         <a href="/proposals/<%= proposal.id %>">
+           <img src="<%= proposal.image %>" class="img-responsive">
+         </a>
+         <p>
+           <% if proposal.favorites.pluck(:user_id).include?(current_user.id) == true %>
+           <form action="/delete_favorite/<%= proposal.favorites.where({:user_id => current_user.id}).pluck(:id)[0] %>">
+             <% else %>
+             <form action="/create_favorite" method="post">
+               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> 
+               <input type="hidden" name="proposal_id" value="<%= proposal.id %>">
+               <input type="hidden" name="user_id" value="<%= current_user.id %>">
+               <% end %>
+               <button class="btn btn-link">
+                 <i class="fa fa-heart-o"></i>
+               </button>
+               <% if proposal.fans.count == 0 %>
+               Be the first to favorite this proposal</p>
+               <% elsif proposal.fans.count == 1 %>
+               <%= proposal.fans.pluck(:username)[0] %> favorites this
+             </p>
+             <% else %>
+             <% temp = Array.new %>
+             <% temp = proposal.fans.pluck(:username).first(proposal.fans.pluck(:username).length-1) %>
+             <% if temp.length == 1 %>
+             <% temp.each do |fan| %>
+             <%= fan %>
+             <% end %>
+             and
+             <%= proposal.fans.pluck(:username)[temp.length] %>
+             favorite this
+             <% else %>
+             <% temp.each do |fan| %>
+             <%= fan %>,
+             <% end %>
+             and
+             <%= proposal.fans.pluck(:username)[temp.length] %>
+             favorite this
+             <% end %>
+           </p>
+           <% end %>
+         </form>
+         <ul class="media-list">
+           <% proposal.feedbacks.each do |feedback| %>
+ 
+           <li class="media">
+             <div class="media-body">
+               <h6 class="media-heading">
+                 <a href="/users/<%= feedback.user_id %>"><%= feedback.user.username %></a>
+                 <small>
+                   <%= time_ago_in_words(feedback.created_at) %> ago
+                 </small>
+               </h6>
+               <%= feedback.body %>
+             </div>
+           </li>
+           <% end %>
+           <li class="media">
+             <div class="media-body">
+               <form action="/create_feedback" method="post">
+                 <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                 <input type="hidden" name="proposal_id" value="<%= proposal.id %>">
+                 <input type="hidden" name="user_id" value="<%= current_user.id %>">
+                 <div class="form-group">
+                   <label for="body" class="sr-only">
+                     Body
+                   </label>
+                   <input type="text" id="body" name="body" placeholder="Add a feedback..." class="form-control" required>
+                 </div>
+               </form>
+             </div>
+           </li>
+         </ul>         
+       </div>
+     </div>
+     <% end %>
+   </div>
+ </div>
