@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604212312) do
+ActiveRecord::Schema.define(version: 20160607220159) do
 
   create_table "favorites", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "photo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "proposal_id"
   end
 
   create_table "feedbacks", force: :cascade do |t|

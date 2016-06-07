@@ -15,6 +15,8 @@ class FavoritesController < ApplicationController
     @favorite = Favorite.new
     @favorite.user_id = params[:user_id]
     @favorite.photo_id = params[:photo_id]
+    @favorite.proposal_id = params[:proposal_id]
+
 
     if @favorite.save
       redirect_to "/favorites", :notice => "Favorite created successfully."

@@ -1,6 +1,7 @@
 class ProposalsController < ApplicationController
   def index
     @proposals = Proposal.all
+    @favorite = Favorite.new
   end
 
   def show
