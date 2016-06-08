@@ -29,6 +29,25 @@
           <a href="/properties/<%= property.id %>/edit" class="btn btn-warning">Edit</a>
           <a href="/delete_property/<%= property.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
         </td>
+      <div class="row">
+            <div class="col-md-12">
+              <form action="/create_proposal" method="post">
+                <!-- Hidden input for authenticity token to protect from forgery -->
+                <input name="authenticity_token" type="hidden" value=<%= form_authenticity_token %>>
+
+                  <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value=<%= current_user.id %>>
+                  <input type="hidden" id="property_id" name="property_id" placeholder="Property" class="form-control" value=<%= property.id %>>
+
+                <button class="btn btn-success">
+                  Create Proposal
+                </button>
+                or
+                <a href="/proposals">Cancel</a>
+              </form>
+            </div>
+          </div>
+
+        </td>
       </tr>
       <% end %>
     </table>
