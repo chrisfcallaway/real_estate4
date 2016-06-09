@@ -1,9 +1,9 @@
 <div class="row">
    <div class="col-md-8 col-md-offset-2">
-     <div class="jumbotron">
-       <h3>
+     <div class="big">
+       <h2>
          <%= @user.username %>
-       </h3>
+       </h2>
      </div>
    </div>
  </div>
@@ -23,44 +23,36 @@
          <a href="/proposals/<%= proposal.id %>">
            <img src="<%= proposal.image %>" class="img-responsive">
          </a>
-         <p>
-           <% if proposal.favorites.pluck(:user_id).include?(current_user.id) == true %>
-           <form action="/delete_favorite/<%= proposal.favorites.where({:user_id => current_user.id}).pluck(:id)[0] %>">
-             <% else %>
-             <form action="/create_favorite" method="post">
-               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"> 
-               <input type="hidden" name="proposal_id" value="<%= proposal.id %>">
-               <input type="hidden" name="user_id" value="<%= current_user.id %>">
-               <% end %>
+
+        <% if proposal.favorites.pluck(:user_id).include?(current_user.id) %>
+             <form action="/delete_favorite/<%= proposal.favorites.where({:user_id => current_user.id}).pluck(:id)[0] %>">
+               <!-- Hidden input for authenticity token to protect from forgery -->
+               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+               <input type="hidden" name="user_id" value="<%= current_user.id %>" >
+               <input type="hidden" name="proposal_id" value="<%= proposal.id %>" >
                <button class="btn btn-link">
-                 <i class="fa fa-heart-o"></i>
+                   <i class="fa fa-heart"></i>
                </button>
-               <% if proposal.fans.count == 0 %>
-               Be the first to favorite this proposal</p>
-               <% elsif proposal.fans.count == 1 %>
-               <%= proposal.fans.pluck(:username)[0] %> favorites this
-             </p>
-             <% else %>
-             <% temp = Array.new %>
-             <% temp = proposal.fans.pluck(:username).first(proposal.fans.pluck(:username).length-1) %>
-             <% if temp.length == 1 %>
-             <% temp.each do |fan| %>
-             <%= fan %>
-             <% end %>
-             and
-             <%= proposal.fans.pluck(:username)[temp.length] %>
-             favorite this
-             <% else %>
-             <% temp.each do |fan| %>
-             <%= fan %>,
-             <% end %>
-             and
-             <%= proposal.fans.pluck(:username)[temp.length] %>
-             favorite this
-             <% end %>
-           </p>
-           <% end %>
-         </form>
+             </form>
+            <% else %>
+              <form action="/create_favorite" method="post">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                 <input type="hidden" name="user_id" value="<%= current_user.id %>" >
+                 <input type="hidden" name="proposal_id" value="<%= proposal.id %>" >
+                 <button class="btn btn-link">
+                     <i class="fa fa-heart-o"></i>
+                </button>
+            <% end %>
+            <% if proposal.favorites.count!=0 %>
+              <% proposal.favorites.each do |favorite| %>
+                <%= favorite.user.username%>,
+              <% end %>
+            <% else %>
+              be the first to
+            <% end %>
+              favorite this
+              </form>
+
          <ul class="media-list">
            <% proposal.feedbacks.each do |feedback| %>
  
