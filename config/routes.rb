@@ -27,6 +27,7 @@ root 'properties#index'
   # READ
   get "/favorites", :controller => "favorites", :action => "index"
   get "/favorites/:id", :controller => "favorites", :action => "show"
+  get "/my_favorites", :controller => "favorites", :action => "my_favorites"
 
   # UPDATE
   get "/favorites/:id/edit", :controller => "favorites", :action => "edit"

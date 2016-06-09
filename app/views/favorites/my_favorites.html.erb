@@ -1,19 +1,10 @@
 <div class="row">
    <div class="col-md-8 col-md-offset-2">
-     <div class="big">
-       <h2>
-         <%= @user.username %>
-       </h2>
-     </div>
-   </div>
- </div>
- <div class="row">
-   <div class="col-md-8 col-md-offset-2">
-     <% @user.proposals.each do |proposal| %>
+     <% @user.favorited_proposals.each do |proposal| %>
      <div class="panel panel-default">
        <div class="panel-heading">
          <h3 class="panel-title">
-           <a href="/users/<%= proposal.user_id %>"><%= proposal.user.username %> submitted proposal id #<%= proposal.id %> for property id #</a>
+           <a href="/users/<%= proposal.user_id %>"><%= proposal.user.username %></a>
            <small>
              <%= time_ago_in_words(proposal.created_at) %> ago
            </small>
@@ -23,39 +14,47 @@
          <a href="/proposals/<%= proposal.id %>">
            <img src="<%= proposal.image %>" class="img-responsive">
          </a>
-
-        <% if proposal.favorites.pluck(:user_id).include?(current_user.id) %>
-             <form action="/delete_favorite/<%= proposal.favorites.where({:user_id => current_user.id}).pluck(:id)[0] %>">
-               <!-- Hidden input for authenticity token to protect from forgery -->
+         <p></p>
+         <p>
+           <% if proposal.favorites.pluck(:user_id).include?(current_user.id) == true %>
+           <form action="/delete_favorite/<%= proposal.favorites.where({:user_id => current_user.id}).pluck(:id)[0] %>">
+             <% else %>
+             <form action="/create_favorite" method="post">
                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-               <input type="hidden" name="user_id" value="<%= current_user.id %>" >
-               <input type="hidden" name="proposal_id" value="<%= proposal.id %>" >
+               <input type="hidden" name="proposal_id" value="<%= proposal.id %>">
+               <input type="hidden" name="user_id" value="<%= current_user.id %>">
+               <% end %>
                <button class="btn btn-link">
-                   <i class="fa fa-heart"></i>
+                 <i class="fa fa-heart-o"></i>
                </button>
-             </form>
-            <% else %>
-              <form action="/create_favorite" method="post">
-                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-                 <input type="hidden" name="user_id" value="<%= current_user.id %>" >
-                 <input type="hidden" name="proposal_id" value="<%= proposal.id %>" >
-                 <button class="btn btn-link">
-                     <i class="fa fa-heart-o"></i>
-                </button>
-            <% end %>
-            <% if proposal.favorites.count!=0 %>
-              <% proposal.favorites.each do |favorite| %>
-                <%= favorite.user.username%>,
-              <% end %>
-            <% else %>
-              be the first to
-            <% end %>
-              favorite this
-              </form>
-
+               <% if proposal.fans.count == 0 %>
+               Be the first to favorite this proposal</p>
+               <% elsif proposal.fans.count == 1 %>
+               <%= proposal.fans.pluck(:username)[0] %> favorites this
+             </p>
+             <% else %>
+             <% temp = Array.new %>
+             <% temp = proposal.fans.pluck(:username).first(proposal.fans.pluck(:username).length-1) %>
+             <% if temp.length == 1 %>
+             <% temp.each do |fan| %>
+             <%= fan %>
+             <% end %>
+             and
+             <%= proposal.fans.pluck(:username)[temp.length] %>
+             favorite this
+             <% else %>
+             <% temp.each do |fan| %>
+             <%= fan %>,
+             <% end %>
+             and
+             <%= proposal.fans.pluck(:username)[temp.length] %>
+             favorite this
+             <% end %>
+           </p>
+           <% end %>
+         </form>
          <ul class="media-list">
            <% proposal.feedbacks.each do |feedback| %>
- 
            <li class="media">
              <div class="media-body">
                <h6 class="media-heading">
@@ -71,6 +70,7 @@
            <li class="media">
              <div class="media-body">
                <form action="/create_feedback" method="post">
+                 <!-- Hidden input for authenticity token to protect from forgery -->
                  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
                  <input type="hidden" name="proposal_id" value="<%= proposal.id %>">
                  <input type="hidden" name="user_id" value="<%= current_user.id %>">
@@ -83,7 +83,7 @@
                </form>
              </div>
            </li>
-         </ul>         
+         </ul>
        </div>
      </div>
      <% end %>
