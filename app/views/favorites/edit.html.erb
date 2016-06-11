@@ -29,11 +29,18 @@
 
       <!-- Label and input for photo_id -->
       <div class="form-group">
-        <label for="photo_id" class="control-label">
-          Photo
+      
+
+        <input type="hidden" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for proposal_id -->
+      <div class="form-group">
+        <label for="proposal_id" class="control-label">
+          proposal
         </label>
 
-        <input type="text" id="photo_id" name="photo_id" placeholder="Photo" class="form-control" value="<%= @favorite.photo_id %>">
+        <input type="text" id="proposal_id" name="proposal_id" placeholder="proposal" class="form-control" value="<%= @favorite.proposal_id %>">
       </div>
 
       <button class="btn btn-warning">

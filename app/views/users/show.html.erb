@@ -13,7 +13,7 @@
      <div class="panel panel-default">
        <div class="panel-heading">
          <h3 class="panel-title">
-           <a href="/users/<%= proposal.user_id %>"><%= proposal.user.username %> submitted proposal id #<%= proposal.id %> for property id #</a>
+           <a href="/users/<%= proposal.user_id %>"><%= proposal.user.username %></a> submitted proposal id # <%= proposal.id %> 
            <small>
              <%= time_ago_in_words(proposal.created_at) %> ago
            </small>
@@ -52,7 +52,6 @@
             <% end %>
               favorite this
               </form>
-
          <ul class="media-list">
            <% proposal.feedbacks.each do |feedback| %>
  

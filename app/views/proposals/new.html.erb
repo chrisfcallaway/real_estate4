@@ -84,11 +84,9 @@
 
       <!-- Label and input for text -->
       <div class="form-group">
-        <label for="text" class="control-label">
-          Text
-        </label>
+    
 
-        <input type="text" id="text" name="text" placeholder="Text" class="form-control" value="<%= @proposal.text %>">
+        <input type="hidden" id="text" name="text" placeholder="Text" class="form-control" value="">
       </div>
 
       <!-- Label and input for image -->
@@ -102,9 +100,7 @@
 
       <!-- Label and input for user_id -->
       <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
+  
 
       <input type="hidden" name="user_id" value="<%= current_user.id %>">
       </div>
